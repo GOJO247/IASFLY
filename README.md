@@ -25,6 +25,7 @@ My original idea is to create a group of AIs, like humans, a group where everyon
 - Interfaz gráfica con `tkinter` y `turtle`.
 - Autenticación centralizada y manejo de tokens.
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/600px-ChatGPT_logo.svg.png" alt="ChatGPT" width="200"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Wolfram_Alpha_logo.svg/600px-Wolfram_Alpha_logo.svg.png" alt="Wolfram Alpha" width="200"/>
 
 ### Error: "Autenticación fallida"
 - **Solution / Solución**: Verifica que la contraseña maestra es correcta. Asegúrate de que las credenciales introducidas coincidan.
