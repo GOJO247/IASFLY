@@ -41,3 +41,9 @@ My original idea is to create a group of AIs, like humans, a group where everyon
 
 ```bash
 pip install -r requirements.txt
+
+## Contributing / Contribuyendo
+
+¡Bienvenidos colaboradores! Este proyecto es un espacio para dejar volar nuestra imaginación digital y construir juntos soluciones innovadoras. Ya sea que tengas experiencia o estés comenzando, tu contribución es valiosa y apreciada. ¡Únete a nosotros y hagamos realidad grandes ideas!
+
+Welcome collaborators! This project is a space to let our digital imagination soar and build innovative solutions together. Whether you have experience or are just starting out, your contribution is valuable and appreciated. Join us and let's bring great ideas to life!
