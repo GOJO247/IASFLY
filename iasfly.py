@@ -1,9 +1,9 @@
 import openai
 import wolframalpha
-import getpass
 import tkinter as tk
 from tkinter import simpledialog, messagebox
 import turtle
+from authlib.integrations.requests_client import OAuth2Session
 from google.oauth2 import service_account
 import google.auth.transport.requests
 
@@ -17,11 +17,11 @@ def autenticar_usuario(usuario, contrasena, contrasena_maestra):
         return False
 
 # Configurar claves de API
-def configurar_claves(openai_key, wolfram_key, google_credentials_path):
-    openai.api_key = openai_key
-    wolfram_client = wolframalpha.Client(wolfram_key)
+def configurar_claves(oauth_tokens):
+    openai.api_key = oauth_tokens['openai']
+    wolfram_client = wolframalpha.Client(oauth_tokens['wolfram'])
     credentials = service_account.Credentials.from_service_account_file(
-        google_credentials_path, scopes=["https://www.googleapis.com/auth/cloud-platform"]
+        oauth_tokens['google'], scopes=["https://www.googleapis.com/auth/cloud-platform"]
     )
     google_auth_req = google.auth.transport.requests.Request()
     credentials.refresh(google_auth_req)
@@ -80,12 +80,14 @@ def iniciar_interfaz():
         usuario = usuario_entry.get()
         contrasena = contrasena_entry.get()
         if autenticar_usuario(usuario, contrasena, "tu_contraseña_maestra"):
-            openai_key = simpledialog.askstring("OpenAI Key", "Introduce tu clave de OpenAI:")
-            wolfram_key = simpledialog.askstring("Wolfram Key", "Introduce tu clave de Wolfram Alpha:")
-            google_credentials_path = simpledialog.askstring("Google Credentials Path", "Introduce la ruta de tus credenciales de Google:")
             pregunta = simpledialog.askstring("Pregunta", "¿Qué quieres preguntar?")
             if pregunta:
-                tokens = configurar_claves(openai_key, wolfram_key, google_credentials_path)
+                oauth_tokens = {
+                    'openai': simpledialog.askstring("OpenAI Key", "Introduce tu clave de OpenAI:"),
+                    'wolfram': simpledialog.askstring("Wolfram Key", "Introduce tu clave de Wolfram Alpha:"),
+                    'google': simpledialog.askstring("Google Credentials Path", "Introduce la ruta de tus credenciales de Google:")
+                }
+                configurar_claves(oauth_tokens)
                 resp_chatgpt, resp_wolfram, url_imagen = conversacion_entre_IA(pregunta)
                 messagebox.showinfo("Respuesta ChatGPT", resp_chatgpt)
                 messagebox.showinfo("Respuesta Wolfram Alpha", resp_wolfram)
