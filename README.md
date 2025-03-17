@@ -24,9 +24,6 @@ My original idea is to create a group of AIs, like humans, a group where everyon
 - Generación de imágenes con DALL-E.
 - Interfaz gráfica con `tkinter` y `turtle`.
 - Autenticación centralizada y manejo de tokens.
-![ChatGPT](https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/1200px-ChatGPT_logo.svg.png)
-## Possible Errors and Solutions / Posibles Errores y Soluciones
-
 ### Error: "Autenticación fallida"
 - **Solution / Solución**: Verifica que la contraseña maestra es correcta. Asegúrate de que las credenciales introducidas coincidan.
 
