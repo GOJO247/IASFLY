@@ -1,9 +1,28 @@
 import openai
 import wolframalpha
+import getpass
 
-# Configura tus claves de API
-openai.api_key = 'tu_clave_de_openai'  # Clave de OpenAI para ChatGPT
-wolfram_client = wolframalpha.Client('tu_clave_de_wolframalpha')  # Clave de Wolfram Alpha
+# Inputs de usuario
+usuario = input("Introduce tu usuario: ")
+contrasena = getpass.getpass("Introduce tu contraseña: ")
+pregunta_usuario = input("¿Qué quieres preguntar? ")
+
+# Contraseña maestra para la conexión segura
+CONTRASENA_MAESTRA = 'tu_contraseña_maestra'
+
+# Función para autenticar al usuario
+def autenticar_usuario(usuario, contrasena, contrasena_maestra):
+    if contrasena == contrasena_maestra:
+        print("Autenticación exitosa.")
+        return True
+    else:
+        print("Autenticación fallida.")
+        return False
+
+# Función para configurar las claves de API
+def configurar_claves():
+    openai.api_key = 'tu_clave_de_openai'  # Clave de OpenAI para ChatGPT
+    wolfram_client = wolframalpha.Client('tu_clave_de_wolframalpha')  # Clave de Wolfram Alpha
 
 # Función para preguntar a ChatGPT
 def preguntar_a_chatgpt(pregunta):
@@ -35,6 +54,9 @@ def conversacion_entre_IA(pregunta):
         respuesta_wolfram = preguntar_a_wolfram(pregunta)
         print(f"Wolfram Alpha: {respuesta_wolfram}")
 
-# Ejemplo de uso
-pregunta_usuario = "Calcula la derivada de x^2 + 3x + 2 y explícamelo."
-conversacion_entre_IA(pregunta_usuario)
+# Principal
+if autenticar_usuario(usuario, contrasena, CONTRASENA_MAESTRA):
+    configurar_claves()
+    conversacion_entre_IA(pregunta_usuario)
+else:
+    print("No se puede proceder sin autenticación.")
