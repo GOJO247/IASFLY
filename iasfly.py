@@ -1,8 +1,5 @@
 import openai
 import wolframalpha
-import tkinter as tk
-from tkinter import simpledialog, messagebox
-import turtle
 from authlib.integrations.requests_client import OAuth2Session
 from google.oauth2 import service_account
 import google.auth.transport.requests
@@ -10,10 +7,10 @@ import google.auth.transport.requests
 # Función para autenticar al usuario
 def autenticar_usuario(usuario, contrasena, contrasena_maestra):
     if contrasena == contrasena_maestra:
-        messagebox.showinfo("Autenticación", "Autenticación exitosa.")
+        print("Autenticación exitosa.")
         return True
     else:
-        messagebox.showerror("Autenticación", "Autenticación fallida.")
+        print("Autenticación fallida.")
         return False
 
 # Configurar claves de API
@@ -63,39 +60,20 @@ def conversacion_entre_IA(pregunta):
     url_imagen = generar_imagen(respuesta_wolfram)
     return respuesta_chatgpt, respuesta_wolfram, url_imagen
 
-# Interfaz gráfica
-def iniciar_interfaz():
-    root = tk.Tk()
-    root.title("Consultas IA")
-
-    tk.Label(root, text="Usuario:").grid(row=0, column=0)
-    usuario_entry = tk.Entry(root)
-    usuario_entry.grid(row=0, column=1)
-
-    tk.Label(root, text="Contraseña:").grid(row=1, column=0)
-    contrasena_entry = tk.Entry(root, show="*")
-    contrasena_entry.grid(row=1, column=1)
-
-    def autenticar_y_consultar():
-        usuario = usuario_entry.get()
-        contrasena = contrasena_entry.get()
-        if autenticar_usuario(usuario, contrasena, "tu_contraseña_maestra"):
-            pregunta = simpledialog.askstring("Pregunta", "¿Qué quieres preguntar?")
-            if pregunta:
-                oauth_tokens = {
-                    'openai': simpledialog.askstring("OpenAI Key", "Introduce tu clave de OpenAI:"),
-                    'wolfram': simpledialog.askstring("Wolfram Key", "Introduce tu clave de Wolfram Alpha:"),
-                    'google': simpledialog.askstring("Google Credentials Path", "Introduce la ruta de tus credenciales de Google:")
-                }
-                configurar_claves(oauth_tokens)
-                resp_chatgpt, resp_wolfram, url_imagen = conversacion_entre_IA(pregunta)
-                messagebox.showinfo("Respuesta ChatGPT", resp_chatgpt)
-                messagebox.showinfo("Respuesta Wolfram Alpha", resp_wolfram)
-                messagebox.showinfo("Imagen generada", url_imagen)
-
-    tk.Button(root, text="Autenticar y Consultar", command=autenticar_y_consultar).grid(row=2, column=0, columnspan=2)
-
-    root.mainloop()
-
 if __name__ == "__main__":
-    iniciar_interfaz()
+    # Solicitar autenticación
+    usuario = input("Usuario: ")
+    contrasena = input("Contraseña: ")
+    if autenticar_usuario(usuario, contrasena, "tu_contraseña_maestra"):
+        pregunta = input("¿Qué quieres preguntar? ")
+        if pregunta:
+            oauth_tokens = {
+                'openai': input("Introduce tu clave de OpenAI: "),
+                'wolfram': input("Introduce tu clave de Wolfram Alpha: "),
+                'google': input("Introduce la ruta de tus credenciales de Google: ")
+            }
+            configurar_claves(oauth_tokens)
+            resp_chatgpt, resp_wolfram, url_imagen = conversacion_entre_IA(pregunta)
+            print("Respuesta ChatGPT:", resp_chatgpt)
+            print("Respuesta Wolfram Alpha:", resp_wolfram)
+            print("Imagen generada:", url_imagen)
